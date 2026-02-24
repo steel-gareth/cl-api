@@ -270,7 +270,7 @@ export class CourtListenerAPI {
     if (this.apiKey == null) {
       return undefined;
     }
-    return buildHeaders([{ Authorization: this.apiKey }]);
+    return buildHeaders([{ Authorization: `Token ${this.apiKey}` }]);
   }
 
   protected async basicAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {

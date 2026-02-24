@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import { CourtListener } from 'court-listener';
+import { CourtListenerAPI } from 'court-listener';
 
-const { stringifyQuery } = CourtListener.prototype as any;
+const { stringifyQuery } = CourtListenerAPI.prototype as any;
 
 describe(stringifyQuery, () => {
   for (const [input, expected] of [

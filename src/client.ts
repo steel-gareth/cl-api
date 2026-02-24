@@ -73,7 +73,7 @@ export interface ClientOptions {
   /**
    * Override the default base URL for the API, e.g., "https://api.example.com/v2/"
    *
-   * Defaults to process.env['COURT_LISTENER_BASE_URL'].
+   * Defaults to process.env['COURT_LISTENER_API_BASE_URL'].
    */
   baseURL?: string | null | undefined;
 
@@ -127,7 +127,7 @@ export interface ClientOptions {
   /**
    * Set the log level.
    *
-   * Defaults to process.env['COURT_LISTENER_LOG'] or 'warn' if it isn't set.
+   * Defaults to process.env['COURT_LISTENER_API_LOG'] or 'warn' if it isn't set.
    */
   logLevel?: LogLevel | undefined;
 
@@ -140,9 +140,9 @@ export interface ClientOptions {
 }
 
 /**
- * API Client for interfacing with the Court Listener API.
+ * API Client for interfacing with the Court Listener API API.
  */
-export class CourtListener {
+export class CourtListenerAPI {
   apiKey: string | null;
   username: string | null;
   password: string | null;
@@ -160,12 +160,12 @@ export class CourtListener {
   private _options: ClientOptions;
 
   /**
-   * API Client for interfacing with the Court Listener API.
+   * API Client for interfacing with the Court Listener API API.
    *
    * @param {string | null | undefined} [opts.apiKey=process.env['COURT_LISTENER_API_KEY'] ?? null]
    * @param {string | null | undefined} [opts.username=process.env['COURT_LISTENER_USERNAME'] ?? null]
    * @param {string | null | undefined} [opts.password=process.env['COURT_LISTENER_PASSWORD'] ?? null]
-   * @param {string} [opts.baseURL=process.env['COURT_LISTENER_BASE_URL'] ?? https://www.courtlistener.com/api/rest/v4] - Override the default base URL for the API.
+   * @param {string} [opts.baseURL=process.env['COURT_LISTENER_API_BASE_URL'] ?? https://www.courtlistener.com/api/rest/v4] - Override the default base URL for the API.
    * @param {number} [opts.timeout=1 minute] - The maximum amount of time (in milliseconds) the client will wait for a response before timing out.
    * @param {MergedRequestInit} [opts.fetchOptions] - Additional `RequestInit` options to be passed to `fetch` calls.
    * @param {Fetch} [opts.fetch] - Specify a custom `fetch` function implementation.
@@ -174,7 +174,7 @@ export class CourtListener {
    * @param {Record<string, string | undefined>} opts.defaultQuery - Default query parameters to include with every request to the API.
    */
   constructor({
-    baseURL = readEnv('COURT_LISTENER_BASE_URL'),
+    baseURL = readEnv('COURT_LISTENER_API_BASE_URL'),
     apiKey = readEnv('COURT_LISTENER_API_KEY') ?? null,
     username = readEnv('COURT_LISTENER_USERNAME') ?? null,
     password = readEnv('COURT_LISTENER_PASSWORD') ?? null,
@@ -189,14 +189,14 @@ export class CourtListener {
     };
 
     this.baseURL = options.baseURL!;
-    this.timeout = options.timeout ?? CourtListener.DEFAULT_TIMEOUT /* 1 minute */;
+    this.timeout = options.timeout ?? CourtListenerAPI.DEFAULT_TIMEOUT /* 1 minute */;
     this.logger = options.logger ?? console;
     const defaultLogLevel = 'warn';
     // Set default logLevel early so that we can log a warning in parseLogLevel.
     this.logLevel = defaultLogLevel;
     this.logLevel =
       parseLogLevel(options.logLevel, 'ClientOptions.logLevel', this) ??
-      parseLogLevel(readEnv('COURT_LISTENER_LOG'), "process.env['COURT_LISTENER_LOG']", this) ??
+      parseLogLevel(readEnv('COURT_LISTENER_API_LOG'), "process.env['COURT_LISTENER_API_LOG']", this) ??
       defaultLogLevel;
     this.fetchOptions = options.fetchOptions;
     this.maxRetries = options.maxRetries ?? 2;
@@ -300,7 +300,7 @@ export class CourtListener {
         if (value === null) {
           return `${encodeURIComponent(key)}=`;
         }
-        throw new Errors.CourtListenerError(
+        throw new Errors.CourtListenerAPIError(
           `Cannot stringify type ${typeof value}; Expected string, number, boolean, or null. If you need to pass nested query parameters, you can manually encode them, e.g. { query: { 'foo[key1]': value1, 'foo[key2]': value2 } }, and please open a GitHub issue requesting better support for your use case.`,
         );
       })
@@ -787,10 +787,10 @@ export class CourtListener {
     }
   }
 
-  static CourtListener = this;
+  static CourtListenerAPI = this;
   static DEFAULT_TIMEOUT = 60000; // 1 minute
 
-  static CourtListenerError = Errors.CourtListenerError;
+  static CourtListenerAPIError = Errors.CourtListenerAPIError;
   static APIError = Errors.APIError;
   static APIConnectionError = Errors.APIConnectionError;
   static APIConnectionTimeoutError = Errors.APIConnectionTimeoutError;
@@ -812,12 +812,12 @@ export class CourtListener {
   opinions: API.Opinions = new API.Opinions(this);
 }
 
-CourtListener.Courts = Courts;
-CourtListener.Dockets = Dockets;
-CourtListener.Clusters = Clusters;
-CourtListener.Opinions = Opinions;
+CourtListenerAPI.Courts = Courts;
+CourtListenerAPI.Dockets = Dockets;
+CourtListenerAPI.Clusters = Clusters;
+CourtListenerAPI.Opinions = Opinions;
 
-export declare namespace CourtListener {
+export declare namespace CourtListenerAPI {
   export type RequestOptions = Opts.RequestOptions;
 
   export {

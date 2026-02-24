@@ -7,9 +7,9 @@ const client = new CourtListenerAPI({
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
 
-describe('resource dockets', () => {
+describe('resource opinions', () => {
   test('retrieve', async () => {
-    const responsePromise = client.dockets.retrieve(0);
+    const responsePromise = client.opinions.retrieve(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -22,7 +22,7 @@ describe('resource dockets', () => {
   test('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.dockets.retrieve(
+      client.opinions.retrieve(
         0,
         {
           fields: 'fields',
@@ -35,7 +35,7 @@ describe('resource dockets', () => {
   });
 
   test('list', async () => {
-    const responsePromise = client.dockets.list();
+    const responsePromise = client.opinions.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
     const response = await responsePromise;
@@ -48,30 +48,21 @@ describe('resource dockets', () => {
   test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
-      client.dockets.list(
+      client.opinions.list(
         {
           id: 0,
-          blocked: true,
-          case_name: 'case_name',
-          cause: 'cause',
+          cited_opinion: 0,
+          cluster: 0,
+          cluster__docket__court: 'cluster__docket__court',
+          cluster__docket__docket_number: 'cluster__docket__docket_number',
           count: 'on',
-          court: 'court',
-          court__jurisdiction: 'court__jurisdiction',
-          'court__jurisdiction!': 'court__jurisdiction!',
           cursor: 'cursor',
           date_created: '2019-12-27T18:11:19.117Z',
           date_created__gte: '2019-12-27T18:11:19.117Z',
           date_created__lte: '2019-12-27T18:11:19.117Z',
-          date_filed: '2019-12-27',
-          date_filed__gte: '2019-12-27',
-          date_filed__lte: '2019-12-27',
           date_modified: '2019-12-27T18:11:19.117Z',
           date_modified__gte: '2019-12-27T18:11:19.117Z',
           date_modified__lte: '2019-12-27T18:11:19.117Z',
-          date_terminated: '2019-12-27',
-          date_terminated__gte: '2019-12-27',
-          date_terminated__lte: '2019-12-27',
-          docket_number: 'docket_number',
           fields: 'fields',
           format: 'json',
           id__gt: 0,
@@ -79,11 +70,10 @@ describe('resource dockets', () => {
           id__lt: 0,
           id__lte: 0,
           id__range: 'id__range',
-          nature_of_suit: 'nature_of_suit',
           omit: 'omit',
           order_by: 'order_by',
           page: 1,
-          source: 0,
+          type: 'type',
         },
         { path: '/_stainless_unknown_path' },
       ),

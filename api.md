@@ -33,3 +33,15 @@ Methods:
 
 - <code title="get /clusters/{id}/">client.clusters.<a href="./src/resources/clusters.ts">retrieve</a>(id, { ...params }) -> Cluster</code>
 - <code title="get /clusters/">client.clusters.<a href="./src/resources/clusters.ts">list</a>({ ...params }) -> ClusterListResponse</code>
+
+# Opinions
+
+Types:
+
+- <code><a href="./src/resources/opinions.ts">Opinion</a></code>
+- <code><a href="./src/resources/opinions.ts">OpinionListResponse</a></code>
+
+Methods:
+
+- <code title="get /opinions/{id}/">client.opinions.<a href="./src/resources/opinions.ts">retrieve</a>(id, { ...params }) -> Opinion</code>
+- <code title="get /opinions/">client.opinions.<a href="./src/resources/opinions.ts">list</a>({ ...params }) -> OpinionListResponse</code>

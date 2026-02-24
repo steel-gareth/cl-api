@@ -21,10 +21,3 @@ export {
   type DocketRetrieveParams,
   type DocketListParams,
 } from './dockets';
-export {
-  Opinions,
-  type Opinion,
-  type OpinionListResponse,
-  type OpinionRetrieveParams,
-  type OpinionListParams,
-} from './opinions';

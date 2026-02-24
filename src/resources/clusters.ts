@@ -62,7 +62,7 @@ export interface Cluster {
   /**
    * List of parallel citation objects for this cluster.
    */
-  citations?: Array<unknown>;
+  citations?: Array<Cluster.Citation>;
 
   correction?: string | null;
 
@@ -128,6 +128,33 @@ export interface Cluster {
   summary?: string | null;
 
   syllabus?: string | null;
+}
+
+export namespace Cluster {
+  /**
+   * A parallel citation for an opinion cluster.
+   */
+  export interface Citation {
+    /**
+     * The starting page number in the reporter.
+     */
+    page?: string | null;
+
+    /**
+     * The reporter abbreviation (e.g. "U.S.", "S. Ct.").
+     */
+    reporter?: string;
+
+    /**
+     * The citation type identifier.
+     */
+    type?: number;
+
+    /**
+     * The volume number of the reporter.
+     */
+    volume?: number | null;
+  }
 }
 
 export interface ClusterListResponse {

@@ -66,7 +66,10 @@ export interface Docket {
    */
   audio_files?: Array<string>;
 
-  bankruptcy_information?: unknown | null;
+  /**
+   * Bankruptcy-specific information, if applicable.
+   */
+  bankruptcy_information?: { [key: string]: unknown } | null;
 
   blocked?: boolean;
 
@@ -147,7 +150,10 @@ export interface Docket {
 
   ia_upload_failure_count?: number | null;
 
-  idb_data?: unknown | null;
+  /**
+   * Integrated database data, if available.
+   */
+  idb_data?: { [key: string]: unknown } | null;
 
   jurisdiction_type?: string | null;
 
@@ -157,7 +163,10 @@ export interface Docket {
 
   nature_of_suit?: string | null;
 
-  original_court_info?: unknown | null;
+  /**
+   * Original court information, if available.
+   */
+  original_court_info?: { [key: string]: unknown } | null;
 
   pacer_case_id?: string | null;
 

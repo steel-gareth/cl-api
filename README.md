@@ -1,8 +1,8 @@
-# Court Listener TypeScript API Library
+# Court Listener API TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/court-listener.svg?label=npm%20(stable)>)](https://npmjs.org/package/court-listener) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/court-listener)
 
-This library provides convenient access to the Court Listener REST API from server-side TypeScript or JavaScript.
+This library provides convenient access to the Court Listener API REST API from server-side TypeScript or JavaScript.
 
 The REST API documentation can be found on [www.courtlistener.com](https://www.courtlistener.com/contact/). The full API of this library can be found in [api.md](api.md).
 
@@ -20,9 +20,9 @@ The full API of this library can be found in [api.md](api.md).
 
 <!-- prettier-ignore -->
 ```js
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
@@ -37,13 +37,13 @@ This library includes TypeScript definitions for all request params and response
 
 <!-- prettier-ignore -->
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
-const courts: CourtListener.CourtListResponse = await client.courts.list();
+const courts: CourtListenerAPI.CourtListResponse = await client.courts.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -57,7 +57,7 @@ a subclass of `APIError` will be thrown:
 <!-- prettier-ignore -->
 ```ts
 const courts = await client.courts.list().catch(async (err) => {
-  if (err instanceof CourtListener.APIError) {
+  if (err instanceof CourtListenerAPI.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
     console.log(err.headers); // {server: 'nginx', ...}
@@ -91,7 +91,7 @@ You can use the `maxRetries` option to configure or disable this:
 <!-- prettier-ignore -->
 ```js
 // Configure the default for all requests:
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   maxRetries: 0, // default is 2
 });
 
@@ -108,7 +108,7 @@ Requests time out after 1 minute by default. You can configure this with a `time
 <!-- prettier-ignore -->
 ```ts
 // Configure the default for all requests:
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   timeout: 20 * 1000, // 20 seconds (default is 1 minute)
 });
 
@@ -134,7 +134,7 @@ Unlike `.asResponse()` this method consumes the body, returning once it is parse
 
 <!-- prettier-ignore -->
 ```ts
-const client = new CourtListener();
+const client = new CourtListenerAPI();
 
 const response = await client.courts.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
@@ -155,13 +155,13 @@ console.log(courts.count);
 
 The log level can be configured in two ways:
 
-1. Via the `COURT_LISTENER_LOG` environment variable
+1. Via the `COURT_LISTENER_API_LOG` environment variable
 2. Using the `logLevel` client option (overrides the environment variable if set)
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   logLevel: 'debug', // Show all log messages
 });
 ```
@@ -187,13 +187,13 @@ When providing a custom logger, the `logLevel` option still controls which messa
 below the configured level will not be sent to your logger.
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 import pino from 'pino';
 
 const logger = pino();
 
-const client = new CourtListener({
-  logger: logger.child({ name: 'CourtListener' }),
+const client = new CourtListenerAPI({
+  logger: logger.child({ name: 'CourtListenerAPI' }),
   logLevel: 'debug', // Send all messages to pino, allowing it to filter
 });
 ```
@@ -256,10 +256,10 @@ globalThis.fetch = fetch;
 Or pass it to the client:
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 import fetch from 'my-fetch';
 
-const client = new CourtListener({ fetch });
+const client = new CourtListenerAPI({ fetch });
 ```
 
 ### Fetch options
@@ -267,9 +267,9 @@ const client = new CourtListener({ fetch });
 If you want to set custom `fetch` options without overriding the `fetch` function, you can provide a `fetchOptions` object when instantiating the client or making a request. (Request-specific options override client options.)
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   fetchOptions: {
     // `RequestInit` options
   },
@@ -284,11 +284,11 @@ options to requests:
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/node.svg" align="top" width="18" height="21"> **Node** <sup>[[docs](https://github.com/nodejs/undici/blob/main/docs/docs/api/ProxyAgent.md#example---proxyagent-with-fetch)]</sup>
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 import * as undici from 'undici';
 
 const proxyAgent = new undici.ProxyAgent('http://localhost:8888');
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   fetchOptions: {
     dispatcher: proxyAgent,
   },
@@ -298,9 +298,9 @@ const client = new CourtListener({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/bun.svg" align="top" width="18" height="21"> **Bun** <sup>[[docs](https://bun.sh/guides/http/proxy)]</sup>
 
 ```ts
-import CourtListener from 'court-listener';
+import CourtListenerAPI from 'court-listener';
 
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   fetchOptions: {
     proxy: 'http://localhost:8888',
   },
@@ -310,10 +310,10 @@ const client = new CourtListener({
 <img src="https://raw.githubusercontent.com/stainless-api/sdk-assets/refs/heads/main/deno.svg" align="top" width="18" height="21"> **Deno** <sup>[[docs](https://docs.deno.com/api/deno/~/Deno.createHttpClient)]</sup>
 
 ```ts
-import CourtListener from 'npm:court-listener';
+import CourtListenerAPI from 'npm:court-listener';
 
 const httpClient = Deno.createHttpClient({ proxy: { url: 'http://localhost:8888' } });
-const client = new CourtListener({
+const client = new CourtListenerAPI({
   fetchOptions: {
     client: httpClient,
   },

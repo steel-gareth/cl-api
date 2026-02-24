@@ -31,13 +31,6 @@ import {
   DocketRetrieveParams,
   Dockets,
 } from './resources/dockets';
-import {
-  Opinion,
-  OpinionListParams,
-  OpinionListResponse,
-  OpinionRetrieveParams,
-  Opinions,
-} from './resources/opinions';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
 import { FinalRequestOptions, RequestOptions } from './internal/request-options';
@@ -809,13 +802,11 @@ export class CourtListenerAPI {
   courts: API.Courts = new API.Courts(this);
   dockets: API.Dockets = new API.Dockets(this);
   clusters: API.Clusters = new API.Clusters(this);
-  opinions: API.Opinions = new API.Opinions(this);
 }
 
 CourtListenerAPI.Courts = Courts;
 CourtListenerAPI.Dockets = Dockets;
 CourtListenerAPI.Clusters = Clusters;
-CourtListenerAPI.Opinions = Opinions;
 
 export declare namespace CourtListenerAPI {
   export type RequestOptions = Opts.RequestOptions;
@@ -842,13 +833,5 @@ export declare namespace CourtListenerAPI {
     type ClusterListResponse as ClusterListResponse,
     type ClusterRetrieveParams as ClusterRetrieveParams,
     type ClusterListParams as ClusterListParams,
-  };
-
-  export {
-    Opinions as Opinions,
-    type Opinion as Opinion,
-    type OpinionListResponse as OpinionListResponse,
-    type OpinionRetrieveParams as OpinionRetrieveParams,
-    type OpinionListParams as OpinionListParams,
   };
 }

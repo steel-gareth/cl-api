@@ -8,8 +8,7 @@ const client = new CourtListenerAPI({
 });
 
 describe('resource clusters', () => {
-  // Mock server tests are disabled
-  test.skip('retrieve', async () => {
+  test('retrieve', async () => {
     const responsePromise = client.clusters.retrieve(0);
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -20,8 +19,7 @@ describe('resource clusters', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('retrieve: request options and params are passed correctly', async () => {
+  test('retrieve: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.clusters.retrieve(
@@ -36,8 +34,7 @@ describe('resource clusters', () => {
     ).rejects.toThrow(CourtListenerAPI.NotFoundError);
   });
 
-  // Mock server tests are disabled
-  test.skip('list', async () => {
+  test('list', async () => {
     const responsePromise = client.clusters.list();
     const rawResponse = await responsePromise.asResponse();
     expect(rawResponse).toBeInstanceOf(Response);
@@ -48,8 +45,7 @@ describe('resource clusters', () => {
     expect(dataAndResponse.response).toBe(rawResponse);
   });
 
-  // Mock server tests are disabled
-  test.skip('list: request options and params are passed correctly', async () => {
+  test('list: request options and params are passed correctly', async () => {
     // ensure the request options are being passed correctly by passing an invalid HTTP method in order to cause an error
     await expect(
       client.clusters.list(

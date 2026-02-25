@@ -1,8 +1,8 @@
 // File generated from our OpenAPI spec by Stainless. See CONTRIBUTING.md for details.
 
-import CourtListenerAPI from 'court-listener';
+import CourtListener from 'court-listener';
 
-const client = new CourtListenerAPI({
+const client = new CourtListener({
   apiKey: 'My API Key',
   baseURL: process.env['TEST_API_BASE_URL'] ?? 'http://127.0.0.1:4010',
 });
@@ -31,7 +31,7 @@ describe('resource dockets', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(CourtListenerAPI.NotFoundError);
+    ).rejects.toThrow(CourtListener.NotFoundError);
   });
 
   test('list', async () => {
@@ -87,6 +87,6 @@ describe('resource dockets', () => {
         },
         { path: '/_stainless_unknown_path' },
       ),
-    ).rejects.toThrow(CourtListenerAPI.NotFoundError);
+    ).rejects.toThrow(CourtListener.NotFoundError);
   });
 });

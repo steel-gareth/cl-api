@@ -1,4 +1,4 @@
-# Court Listener TypeScript Documentation
+# Court Listener TypeScript API Library
 
 [![NPM version](<https://img.shields.io/npm/v/court-listener.svg?label=npm%20(stable)>)](https://npmjs.org/package/court-listener) ![npm bundle size](https://img.shields.io/bundlephobia/minzip/court-listener)
 

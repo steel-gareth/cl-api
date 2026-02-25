@@ -11,7 +11,7 @@ It is generated with [Stainless](https://www.stainless.com/).
 ## Installation
 
 ```sh
-npm install court-listener
+npm install git+ssh://git@github.com:stainless-sdks/court-listener-typescript.git
 ```
 
 ## Usage

@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.0 (2026-02-25)
+
+Full Changelog: [v0.2.0...v0.3.0](https://github.com/steel-gareth/cl-api/compare/v0.2.0...v0.3.0)
+
+### Features
+
+* **api:** fix openapi ([971f74a](https://github.com/steel-gareth/cl-api/commit/971f74aaba69917e23564ed31c3e14993648092e))
+* **api:** manual updates ([36b73c5](https://github.com/steel-gareth/cl-api/commit/36b73c5a659280f61c19b06f7d44de76e741f420))
+* **api:** move back to openapi spec ([6a37e89](https://github.com/steel-gareth/cl-api/commit/6a37e89f171c808ca1f93ffacfa9142b679471c4))
+
 ## 0.2.0 (2026-02-25)
 
 Full Changelog: [v0.1.0...v0.2.0](https://github.com/steel-gareth/cl-api/compare/v0.1.0...v0.2.0)

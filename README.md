@@ -23,8 +23,7 @@ The full API of this library can be found in [api.md](api.md).
 import CourtListener from 'court-listener';
 
 const client = new CourtListener({
-  username: process.env['COURT_LISTENER_USERNAME'], // This is the default and can be omitted
-  password: process.env['COURT_LISTENER_PASSWORD'], // This is the default and can be omitted
+  apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
 const courts = await client.courts.list();
@@ -41,8 +40,7 @@ This library includes TypeScript definitions for all request params and response
 import CourtListener from 'court-listener';
 
 const client = new CourtListener({
-  username: process.env['COURT_LISTENER_USERNAME'], // This is the default and can be omitted
-  password: process.env['COURT_LISTENER_PASSWORD'], // This is the default and can be omitted
+  apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
 const courts: CourtListener.CourtListResponse = await client.courts.list();

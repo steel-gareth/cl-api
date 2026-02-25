@@ -1,4 +1,4 @@
 configured_endpoints: 8
-openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/stainless-steel-gareth%2Fcourt-listener-ee500a4f81e589083d93d61ca1973c2ccf3f4876bbdd27aa21ed0fe8e1817e0b.yml
-openapi_spec_hash: 1767b8a72c5efe9b836aad295ef83a95
-config_hash: 3a120038464a6abc338453c00efcf5e2
+openapi_spec_url: https://storage.googleapis.com/stainless-sdk-openapi-specs/stainless-steel-gareth%2Fcourt-listener-fc7fc5bb9ec6e7bf6a14529fa0205a8b1aa82c85ed7ecf426bb5f5eb5186de6c.yml
+openapi_spec_hash: ee5f972912124400dd48f6e12857dbe6
+config_hash: 988ee01cf7f7bd067c6d906397dad32d

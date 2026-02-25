@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -24,10 +25,12 @@ export class Courts extends APIResource {
   list(
     query: CourtListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<CourtListResponse> {
-    return this._client.get('/courts/', { query, ...options });
+  ): PagePromise<CourtsCursorURLPage, Court> {
+    return this._client.getAPIList('/courts/', CursorURLPage<Court>, { query, ...options });
   }
 }
+
+export type CourtsCursorURLPage = CursorURLPage<Court>;
 
 export interface Court {
   /**
@@ -88,25 +91,6 @@ export interface Court {
    * Court's website URL.
    */
   url?: string;
-}
-
-export interface CourtListResponse {
-  /**
-   * URL to fetch the total count of matching items.
-   */
-  count?: string;
-
-  /**
-   * URL for the next page of results, or null.
-   */
-  next?: string | null;
-
-  /**
-   * URL for the previous page of results, or null.
-   */
-  previous?: string | null;
-
-  results?: Array<Court>;
 }
 
 export interface CourtRetrieveParams {
@@ -221,7 +205,7 @@ export interface CourtListParams {
 export declare namespace Courts {
   export {
     type Court as Court,
-    type CourtListResponse as CourtListResponse,
+    type CourtsCursorURLPage as CourtsCursorURLPage,
     type CourtRetrieveParams as CourtRetrieveParams,
     type CourtListParams as CourtListParams,
   };

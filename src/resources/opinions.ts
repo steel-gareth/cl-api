@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -32,10 +33,12 @@ export class Opinions extends APIResource {
   list(
     query: OpinionListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<OpinionListResponse> {
-    return this._client.get('/opinions/', { query, ...options });
+  ): PagePromise<OpinionsCursorURLPage, Opinion> {
+    return this._client.getAPIList('/opinions/', CursorURLPage<Opinion>, { query, ...options });
   }
 }
+
+export type OpinionsCursorURLPage = CursorURLPage<Opinion>;
 
 export interface Opinion {
   id?: number;
@@ -147,16 +150,6 @@ export interface Opinion {
    * have OCR artifacts.
    */
   xml_harvard?: string | null;
-}
-
-export interface OpinionListResponse {
-  count?: string;
-
-  next?: string | null;
-
-  previous?: string | null;
-
-  results?: Array<Opinion>;
 }
 
 export interface OpinionRetrieveParams {
@@ -280,7 +273,7 @@ export interface OpinionListParams {
 export declare namespace Opinions {
   export {
     type Opinion as Opinion,
-    type OpinionListResponse as OpinionListResponse,
+    type OpinionsCursorURLPage as OpinionsCursorURLPage,
     type OpinionRetrieveParams as OpinionRetrieveParams,
     type OpinionListParams as OpinionListParams,
   };

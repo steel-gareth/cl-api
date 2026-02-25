@@ -13,30 +13,32 @@ import * as Shims from './internal/shims';
 import * as Opts from './internal/request-options';
 import { VERSION } from './version';
 import * as Errors from './core/error';
+import * as Pagination from './core/pagination';
+import { AbstractPage, CursorURLPageResponse } from './core/pagination';
 import * as Uploads from './core/uploads';
 import * as API from './resources/index';
 import { APIPromise } from './core/api-promise';
 import {
   Cluster,
   ClusterListParams,
-  ClusterListResponse,
   ClusterRetrieveParams,
   Clusters,
+  ClustersCursorURLPage,
 } from './resources/clusters';
-import { Court, CourtListParams, CourtListResponse, CourtRetrieveParams, Courts } from './resources/courts';
+import { Court, CourtListParams, CourtRetrieveParams, Courts, CourtsCursorURLPage } from './resources/courts';
 import {
   Docket,
   DocketListParams,
-  DocketListResponse,
   DocketRetrieveParams,
   Dockets,
+  DocketsCursorURLPage,
 } from './resources/dockets';
 import {
   Opinion,
   OpinionListParams,
-  OpinionListResponse,
   OpinionRetrieveParams,
   Opinions,
+  OpinionsCursorURLPage,
 } from './resources/opinions';
 import { type Fetch } from './internal/builtin-types';
 import { HeadersLike, NullableHeaders, buildHeaders } from './internal/headers';
@@ -559,6 +561,30 @@ export class CourtListener {
     return { response, options, controller, requestLogID, retryOfRequestLogID, startTime };
   }
 
+  getAPIList<Item, PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>>(
+    path: string,
+    Page: new (...args: any[]) => PageClass,
+    opts?: PromiseOrValue<RequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    return this.requestAPIList(
+      Page,
+      opts && 'then' in opts ?
+        opts.then((opts) => ({ method: 'get', path, ...opts }))
+      : { method: 'get', path, ...opts },
+    );
+  }
+
+  requestAPIList<
+    Item = unknown,
+    PageClass extends Pagination.AbstractPage<Item> = Pagination.AbstractPage<Item>,
+  >(
+    Page: new (...args: ConstructorParameters<typeof Pagination.AbstractPage>) => PageClass,
+    options: PromiseOrValue<FinalRequestOptions>,
+  ): Pagination.PagePromise<PageClass, Item> {
+    const request = this.makeRequest(options, null, undefined);
+    return new Pagination.PagePromise<PageClass, Item>(this as any as CourtListener, request, Page);
+  }
+
   async fetchWithTimeout(
     url: RequestInfo,
     init: RequestInit | undefined,
@@ -820,10 +846,13 @@ CourtListener.Opinions = Opinions;
 export declare namespace CourtListener {
   export type RequestOptions = Opts.RequestOptions;
 
+  export import CursorURLPage = Pagination.CursorURLPage;
+  export { type CursorURLPageResponse as CursorURLPageResponse };
+
   export {
     Courts as Courts,
     type Court as Court,
-    type CourtListResponse as CourtListResponse,
+    type CourtsCursorURLPage as CourtsCursorURLPage,
     type CourtRetrieveParams as CourtRetrieveParams,
     type CourtListParams as CourtListParams,
   };
@@ -831,7 +860,7 @@ export declare namespace CourtListener {
   export {
     Dockets as Dockets,
     type Docket as Docket,
-    type DocketListResponse as DocketListResponse,
+    type DocketsCursorURLPage as DocketsCursorURLPage,
     type DocketRetrieveParams as DocketRetrieveParams,
     type DocketListParams as DocketListParams,
   };
@@ -839,7 +868,7 @@ export declare namespace CourtListener {
   export {
     Clusters as Clusters,
     type Cluster as Cluster,
-    type ClusterListResponse as ClusterListResponse,
+    type ClustersCursorURLPage as ClustersCursorURLPage,
     type ClusterRetrieveParams as ClusterRetrieveParams,
     type ClusterListParams as ClusterListParams,
   };
@@ -847,7 +876,7 @@ export declare namespace CourtListener {
   export {
     Opinions as Opinions,
     type Opinion as Opinion,
-    type OpinionListResponse as OpinionListResponse,
+    type OpinionsCursorURLPage as OpinionsCursorURLPage,
     type OpinionRetrieveParams as OpinionRetrieveParams,
     type OpinionListParams as OpinionListParams,
   };

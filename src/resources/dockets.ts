@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -27,10 +28,12 @@ export class Dockets extends APIResource {
   list(
     query: DocketListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<DocketListResponse> {
-    return this._client.get('/dockets/', { query, ...options });
+  ): PagePromise<DocketsCursorURLPage, Docket> {
+    return this._client.getAPIList('/dockets/', CursorURLPage<Docket>, { query, ...options });
   }
 }
+
+export type DocketsCursorURLPage = CursorURLPage<Docket>;
 
 export interface Docket {
   id?: number;
@@ -197,16 +200,6 @@ export interface Docket {
    * API URLs of tags on this docket.
    */
   tags?: Array<string>;
-}
-
-export interface DocketListResponse {
-  count?: string;
-
-  next?: string | null;
-
-  previous?: string | null;
-
-  results?: Array<Docket>;
 }
 
 export interface DocketRetrieveParams {
@@ -407,7 +400,7 @@ export interface DocketListParams {
 export declare namespace Dockets {
   export {
     type Docket as Docket,
-    type DocketListResponse as DocketListResponse,
+    type DocketsCursorURLPage as DocketsCursorURLPage,
     type DocketRetrieveParams as DocketRetrieveParams,
     type DocketListParams as DocketListParams,
   };

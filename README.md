@@ -26,9 +26,10 @@ const client = new CourtListener({
   apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
-const courts = await client.courts.list();
+const page = await client.courts.list();
+const court = page.results[0];
 
-console.log(courts.count);
+console.log(court.id);
 ```
 
 ### Request & Response types
@@ -43,7 +44,7 @@ const client = new CourtListener({
   apiKey: process.env['COURT_LISTENER_API_KEY'], // This is the default and can be omitted
 });
 
-const courts: CourtListener.CourtListResponse = await client.courts.list();
+const [court]: [CourtListener.Court] = await client.courts.list();
 ```
 
 Documentation for each method, request param, and response field are available in docstrings and will appear on hover in most modern editors.
@@ -56,7 +57,7 @@ a subclass of `APIError` will be thrown:
 
 <!-- prettier-ignore -->
 ```ts
-const courts = await client.courts.list().catch(async (err) => {
+const page = await client.courts.list().catch(async (err) => {
   if (err instanceof CourtListener.APIError) {
     console.log(err.status); // 400
     console.log(err.name); // BadRequestError
@@ -122,6 +123,37 @@ On timeout, an `APIConnectionTimeoutError` is thrown.
 
 Note that requests which time out will be [retried twice by default](#retries).
 
+## Auto-pagination
+
+List methods in the CourtListener API are paginated.
+You can use the `for await … of` syntax to iterate through items across all pages:
+
+```ts
+async function fetchAllCourts(params) {
+  const allCourts = [];
+  // Automatically fetches more pages as needed.
+  for await (const court of client.courts.list()) {
+    allCourts.push(court);
+  }
+  return allCourts;
+}
+```
+
+Alternatively, you can request a single page at a time:
+
+```ts
+let page = await client.courts.list();
+for (const court of page.results) {
+  console.log(court);
+}
+
+// Convenience methods are provided for manually paginating:
+while (page.hasNextPage()) {
+  page = await page.getNextPage();
+  // ...
+}
+```
+
 ## Advanced Usage
 
 ### Accessing raw Response data (e.g., headers)
@@ -140,9 +172,11 @@ const response = await client.courts.list().asResponse();
 console.log(response.headers.get('X-My-Header'));
 console.log(response.statusText); // access the underlying Response object
 
-const { data: courts, response: raw } = await client.courts.list().withResponse();
+const { data: page, response: raw } = await client.courts.list().withResponse();
 console.log(raw.headers.get('X-My-Header'));
-console.log(courts.count);
+for await (const court of page) {
+  console.log(court.id);
+}
 ```
 
 ### Logging

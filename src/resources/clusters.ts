@@ -2,6 +2,7 @@
 
 import { APIResource } from '../core/resource';
 import { APIPromise } from '../core/api-promise';
+import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
@@ -27,10 +28,12 @@ export class Clusters extends APIResource {
   list(
     query: ClusterListParams | null | undefined = {},
     options?: RequestOptions,
-  ): APIPromise<ClusterListResponse> {
-    return this._client.get('/clusters/', { query, ...options });
+  ): PagePromise<ClustersCursorURLPage, Cluster> {
+    return this._client.getAPIList('/clusters/', CursorURLPage<Cluster>, { query, ...options });
   }
 }
+
+export type ClustersCursorURLPage = CursorURLPage<Cluster>;
 
 export interface Cluster {
   /**
@@ -155,16 +158,6 @@ export namespace Cluster {
      */
     volume?: number | null;
   }
-}
-
-export interface ClusterListResponse {
-  count?: string;
-
-  next?: string | null;
-
-  previous?: string | null;
-
-  results?: Array<Cluster>;
 }
 
 export interface ClusterRetrieveParams {
@@ -299,7 +292,7 @@ export interface ClusterListParams {
 export declare namespace Clusters {
   export {
     type Cluster as Cluster,
-    type ClusterListResponse as ClusterListResponse,
+    type ClustersCursorURLPage as ClustersCursorURLPage,
     type ClusterRetrieveParams as ClusterRetrieveParams,
     type ClusterListParams as ClusterListParams,
   };

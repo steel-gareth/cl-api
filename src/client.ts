@@ -243,13 +243,6 @@ export class CourtListener {
   }
 
   protected validateHeaders({ values, nulls }: NullableHeaders) {
-    if (this.apiKey && values.get('authorization')) {
-      return;
-    }
-    if (nulls.has('authorization')) {
-      return;
-    }
-
     if (this.username && this.password && values.get('authorization')) {
       return;
     }
@@ -258,22 +251,11 @@ export class CourtListener {
     }
 
     throw new Error(
-      'Could not resolve authentication method. Expected either apiKey, username or password to be set. Or for one of the "Authorization" or "Authorization" headers to be explicitly omitted',
+      'Could not resolve authentication method. Expected the username or password to be set. Or for the "Authorization" headers to be explicitly omitted',
     );
   }
 
   protected async authHeaders(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    return buildHeaders([await this.tokenAuth(opts), await this.basicAuth(opts)]);
-  }
-
-  protected async tokenAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
-    if (this.apiKey == null) {
-      return undefined;
-    }
-    return buildHeaders([{ Authorization: `Token ${this.apiKey}` }]);
-  }
-
-  protected async basicAuth(opts: FinalRequestOptions): Promise<NullableHeaders | undefined> {
     if (!this.username) {
       return undefined;
     }

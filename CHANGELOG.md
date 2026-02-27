@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 (2026-02-27)
+
+Full Changelog: [v0.3.0...v0.3.1](https://github.com/steel-gareth/cl-api/compare/v0.3.0...v0.3.1)
+
+### Chores
+
+* **internal:** move stringifyQuery implementation to internal function ([333fcd8](https://github.com/steel-gareth/cl-api/commit/333fcd8d3014e63ee24abd55d65ddfd180dac313))
+
 ## 0.3.0 (2026-02-25)
 
 Full Changelog: [v0.2.0...v0.3.0](https://github.com/steel-gareth/cl-api/compare/v0.2.0...v0.3.0)

@@ -6,6 +6,9 @@ import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Individual judicial opinions with full text and metadata.
+ */
 export class Opinions extends APIResource {
   /**
    * Look up an opinion by its ID. Note that opinion IDs do **not** reliably match

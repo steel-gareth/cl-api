@@ -6,6 +6,9 @@ import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Case-level metadata sitting at the top of the object hierarchy.
+ */
 export class Dockets extends APIResource {
   /**
    * Retrieve a single docket

@@ -820,9 +820,21 @@ export class CourtListener {
 
   static toFile = Uploads.toFile;
 
+  /**
+   * Metadata about courts in the CourtListener database.
+   */
   courts: API.Courts = new API.Courts(this);
+  /**
+   * Case-level metadata sitting at the top of the object hierarchy.
+   */
   dockets: API.Dockets = new API.Dockets(this);
+  /**
+   * Opinion clusters grouping related decisions from a single hearing.
+   */
   clusters: API.Clusters = new API.Clusters(this);
+  /**
+   * Individual judicial opinions with full text and metadata.
+   */
   opinions: API.Opinions = new API.Opinions(this);
 }
 

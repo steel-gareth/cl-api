@@ -6,6 +6,9 @@ import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Opinion clusters grouping related decisions from a single hearing.
+ */
 export class Clusters extends APIResource {
   /**
    * Look up a cluster by its ID. The cluster ID matches the ID used in CourtListener

@@ -6,6 +6,9 @@ import { CursorURLPage, PagePromise } from '../core/pagination';
 import { RequestOptions } from '../internal/request-options';
 import { path } from '../internal/utils/path';
 
+/**
+ * Metadata about courts in the CourtListener database.
+ */
 export class Courts extends APIResource {
   /**
    * Retrieve a single court
